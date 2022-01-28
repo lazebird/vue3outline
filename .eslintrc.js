@@ -16,9 +16,10 @@ module.exports = defineConfig({
   },
   plugins: ['vue', '@typescript-eslint'],
   rules: {
-    indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     'no-irregular-whitespace': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/require-default-prop': 'off',
   },
 });

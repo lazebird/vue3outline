@@ -1,67 +1,98 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-defineProps<{ msg: string }>();
-
-const count = ref(0);
-</script>
-
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a
-      href="https://code.visualstudio.com/"
-      target="_blank"
-    >VSCode</a>
-    +
-    <a
-      href="https://github.com/johnsoncodehk/volar"
-      target="_blank"
-    >Volar</a>
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a
-      href="https://vitejs.dev/guide/features.html"
-      target="_blank"
-    > Vite Docs </a>
-    |
-    <a
-      href="https://v3.vuejs.org/"
-      target="_blank"
-    >Vue 3 Docs</a>
-  </p>
-
-  <button
-    type="button"
-    @click="count++"
-  >
-    count is: {{ count }}
-  </button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <div class="example">
+    <div class="navigation">
+      <div class="title"> 导航目录 </div>
+      <outline-tree :tree-data="navTree" class="tree">
+        <template #default="{ data }">
+          <div class="node-render-content" @click.stop="jumpToAnchor(data.el)">
+            {{ data.title }}
+          </div>
+        </template>
+      </outline-tree>
+    </div>
+    <div
+      v-outline="{
+        callback: refreshNavTree,
+        selectors: ['h2', 'h3', 'h4'],
+        exceptSelector: '[un-nav]',
+      }"
+      class="content"
+    >
+      <div ref="editor">
+        <TestArticle />
+      </div>
+    </div>
+  </div>
 </template>
 
+<script>
+  import TestArticle from './TestArticle.vue';
+
+  export default {
+    name: 'HelloWorld',
+    components: {
+      TestArticle,
+    },
+    props: {
+      msg: { type: String, default: '' },
+    },
+    data() {
+      return {
+        navTree: [],
+      };
+    },
+    methods: {
+      refreshNavTree(treeData) {
+        this.navTree = treeData;
+      },
+      jumpToAnchor(el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      },
+    },
+  };
+</script>
+
 <style scoped>
-  a {
-    color: #42b983;
+  .example {
+    display: flex;
+    height: calc(100vh - 30px);
   }
 
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
-
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
+  .content {
+    border: 1px solid #3361d8;
+    margin: 0 20px;
+    padding: 40px;
     border-radius: 4px;
-    color: #304455;
+    flex: auto;
+    overflow: auto;
+  }
+
+  .navigation {
+    width: 16rem;
+    flex-shrink: 0;
+    padding: 0.5rem;
+    border-radius: 2px;
+    text-align: left;
+    overflow: auto;
+  }
+  .title {
+    font-size: 1rem;
+    border-bottom: 1px solid #c9c9c9;
+    margin: 0.5rem;
+  }
+
+  .node-render-content {
+    color: #3361d8;
+    user-select: none;
+    cursor: pointer;
+    margin: 2px 0;
+  }
+  .node-render-content:hover {
+    text-decoration: underline;
+  }
+  .node-render-content:active {
+    position: relative;
+    left: 1px;
+    top: 1px;
   }
 </style>
