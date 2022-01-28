@@ -7,7 +7,7 @@ function pathResolve(dir: string) {
 }
 
 export default defineConfig({
-  base: '.',
+  base: './',
   resolve: {
     alias: [
       { find: /@\//, replacement: pathResolve('src') + '/' },
