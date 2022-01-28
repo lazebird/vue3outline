@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import outline from './index';
+import { useOutline } from './index';
 
 const app = createApp(App);
-app.use(outline);
+useOutline(app);
 app.mount('#app');

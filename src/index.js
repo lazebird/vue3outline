@@ -1,11 +1,8 @@
-import vueOutline from '@/directives';
+import vueOutline from '@/directives/outline';
 import tree from '@/components/tree';
 
-export default {
-  install: function (Vue, opts = {}) {
-    let { directiveName = 'outline', treeName = 'outline-tree' } = opts;
-    Vue.directive(directiveName, vueOutline);
-    Vue.component(treeName, tree);
-  },
-};
-export const outline = vueOutline;
+export function useOutline(app, opts = {}) {
+  let { directiveName = 'outline', treeName = 'outline-tree' } = opts;
+  app.directive(directiveName, vueOutline);
+  app.component(treeName, tree);
+}
