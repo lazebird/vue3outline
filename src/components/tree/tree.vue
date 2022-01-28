@@ -1,50 +1,46 @@
 <template>
   <div class="tree-container">
-    <tree-node
-      v-for="(nodeData, idx) of treeData"
-      :key="idx"
-      :node-data="nodeData"
-    />
+    <tree-node v-for="(nodeData, idx) of treeData" :key="idx" :node-data="nodeData" />
   </div>
 </template>
 
 <script>
-import treeNode from './tree-node';
+  import treeNode from './tree-node.vue';
 
-export default {
-  components: {
-    treeNode,
-  },
-  props: {
-    treeData: {
-      type: Array,
-      requied: true,
+  export default {
+    components: {
+      treeNode,
     },
-    indent: {
-      type: String,
-      default: '20px',
+    props: {
+      treeData: {
+        type: Array,
+        requied: true,
+      },
+      indent: {
+        type: String,
+        default: '20px',
+      },
     },
-  },
-  data() {
-    return {
-      isTree: true,
-      level: 0,
-      componentMap: {},
-    };
-  },
-  methods: {
-    registerNodeComponent(id, component) {
-      this.componentMap[id] = component;
+    data() {
+      return {
+        isTree: true,
+        level: 0,
+        componentMap: {},
+      };
     },
-    removeNodeComponent(id) {
-      this.componentMap[id] = undefined;
+    methods: {
+      registerNodeComponent(id, component) {
+        this.componentMap[id] = component;
+      },
+      removeNodeComponent(id) {
+        this.componentMap[id] = undefined;
+      },
+      showChildren(id) {
+        this.componentMap[id] && this.componentMap[id].showChildren();
+      },
+      hideChildren(id) {
+        this.componentMap[id] && this.componentMap[id].hideChildren();
+      },
     },
-    showChildren(id) {
-      this.componentMap[id] && this.componentMap[id].showChildren();
-    },
-    hideChildren(id) {
-      this.componentMap[id] && this.componentMap[id].hideChildren();
-    },
-  },
-};
+  };
 </script>

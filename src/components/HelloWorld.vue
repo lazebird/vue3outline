@@ -18,38 +18,22 @@
       }"
       class="content"
     >
-      <div ref="editor">
-        <TestArticle />
-      </div>
+      <div ref="editor"> <TestArticle /> </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+  import { ref } from 'vue';
   import TestArticle from './TestArticle.vue';
 
-  export default {
-    name: 'HelloWorld',
-    components: {
-      TestArticle,
-    },
-    props: {
-      msg: { type: String, default: '' },
-    },
-    data() {
-      return {
-        navTree: [],
-      };
-    },
-    methods: {
-      refreshNavTree(treeData) {
-        this.navTree = treeData;
-      },
-      jumpToAnchor(el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-      },
-    },
-  };
+  const navTree = ref([]);
+  function refreshNavTree(treeData) {
+    navTree.value = treeData;
+  }
+  function jumpToAnchor(el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  }
 </script>
 
 <style scoped>
