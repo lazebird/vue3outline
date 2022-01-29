@@ -28,6 +28,14 @@
         componentMap: {},
       };
     },
+    mounted() {
+      console.log('[table] data %s', JSON.stringify(this.treeData));
+    },
+    watch: {
+      treeData: (val) => {
+        console.log('[table] data %s', JSON.stringify(val));
+      },
+    },
     methods: {
       registerNodeComponent(id, component) {
         this.componentMap[id] = component;
