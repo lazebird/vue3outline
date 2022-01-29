@@ -1,19 +1,18 @@
 <template>
   <div class="tree-container">
-    <el-table :data="data" row-key="id" border :show-header="false" default-expand-all>
-      <el-table-column>
-        <template #default="scope">
-          <slot :scope="scope">
-            <span @click="handleNodeClick(scope.row)">{{ scope.row.title }}</span>
-          </slot>
-        </template>
-      </el-table-column>
-    </el-table>
+    <tree :data="data">
+      <template #default="scope">
+        <slot :scope="scope">
+          <span @click="handleNodeClick(scope.row)">{{ scope.row.title }}</span>
+        </slot>
+      </template>
+    </tree>
   </div>
 </template>
 
 <script setup>
   import { ref, watch } from 'vue';
+  import Tree from '../tree.vue';
 
   const props = defineProps({ treeData: { type: Array, required: true } });
   const data = ref([]);
