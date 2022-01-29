@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
+    "types": ["element-plus/global"],
     "lib": ["esnext", "dom"],
     "outDir": "./",
     "baseUrl": ".",

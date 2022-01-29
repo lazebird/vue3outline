@@ -5,4 +5,6 @@ dist-ssr
 *.local
 .eslintcache
 .pnpm-debug.log
+auto-imports.d.ts
+components.d.ts
 
