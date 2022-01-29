@@ -11,11 +11,13 @@
     "esModuleInterop": true,
     "allowJs": true,
     "lib": ["esnext", "dom"],
+    "outDir": "./",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
 }
