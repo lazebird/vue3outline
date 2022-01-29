@@ -1,22 +1,22 @@
 <template>
   <div class="example">
-    <div class="navigation">
-      <div class="title"> 导航目录 </div>
-      <outline-tree :tree-data="navTree" class="tree">
+    <div class="nav">
+      <h1> 目录 </h1>
+      <outline-tree :tree-data="navTree">
         <template #default="{ scope }">
-          <span class="node-render-content" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
+          <span class="content_node" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
         </template>
       </outline-tree>
     </div>
-    <div v-outline="{ callback: refreshNavTree, selectors: ['h2', 'h3', 'h4'], exceptSelector: '[un-nav]' }" class="content">
-      <div ref="editor"> <TestArticle /> </div>
-    </div>
+    <div v-outline="tocProps" class="content"> <TestArticle /> </div>
   </div>
 </template>
 
 <script setup>
   import { ref } from 'vue';
   import TestArticle from './test/TestArticle.vue';
+
+  const tocProps = { callback: refreshNavTree, selectors: ['h2', 'h3', 'h4'], exceptSelector: '[un-nav]' };
 
   const navTree = ref([]);
   function refreshNavTree(treeData) {
@@ -30,19 +30,9 @@
 <style scoped>
   .example {
     display: flex;
-    height: calc(100vh - 30px);
   }
 
-  .content {
-    border: 1px solid #3361d8;
-    margin: 0 20px;
-    padding: 40px;
-    border-radius: 4px;
-    flex: auto;
-    overflow: auto;
-  }
-
-  .navigation {
+  .nav {
     width: 16rem;
     flex-shrink: 0;
     padding: 0.5rem;
@@ -50,22 +40,16 @@
     text-align: left;
     overflow: auto;
   }
-  .title {
-    font-size: 1rem;
-    border-bottom: 1px solid #c9c9c9;
-    margin: 0.5rem;
-  }
-
-  .node-render-content {
+  .content_node {
     color: #3361d8;
     user-select: none;
     cursor: pointer;
     margin: 2px 0;
   }
-  .node-render-content:hover {
+  .content_node:hover {
     text-decoration: underline;
   }
-  .node-render-content:active {
+  .content_node:active {
     position: relative;
     left: 1px;
     top: 1px;
