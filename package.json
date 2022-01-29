@@ -1,6 +1,19 @@
 {
   "name": "vue3outline",
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "keywords": [
+    "vue",
+    "vue3",
+    "vite",
+    "outline",
+    "toc"
+  ],
+  "author": "lazebird",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lazebird/vue3outline/issues"
+  },
+  "homepage": "https://github.com/lazebird/vue3outline",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
