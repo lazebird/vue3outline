@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import treeNode from './tree-node.vue';
+  import treeNode from './treeNode.vue';
 
   export default {
     components: {

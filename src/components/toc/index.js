@@ -1,4 +1,4 @@
-import vueOutline from '@/directives/outline';
+import vueOutline from './directive';
 import tree from '@/components//tree/tree.vue';
 
 export function useOutline(app, opts = {}) {
