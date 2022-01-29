@@ -16,7 +16,7 @@
 
 <script setup>
   import { ref } from 'vue';
-  import TestArticle from './TestArticle.vue';
+  import TestArticle from './test/TestArticle.vue';
 
   const navTree = ref([]);
   function refreshNavTree(treeData) {
