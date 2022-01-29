@@ -1,87 +1,71 @@
-import { ref } from 'vue';
+let dom = null;
+let observer = null;
+let props = { callback: null, selectors: [], exceptSelector: null };
+let tocTree = [];
 
-const OPTIONS = {
+const obs_config = {
   subtree: true,
   childList: true,
   characterData: true,
 };
 
-function generateNavTree(dom, selectors, exceptSelector) {
-  let list = [];
-  if (exceptSelector) {
-    let exceptList = dom.querySelectorAll(exceptSelector);
-    exceptList.forEach((element) => {
-      element.__nav_except = true;
-    });
+function getElemPos(e) {
+  const rect = e.getBoundingClientRect();
+  return { left: rect.left + window.scrollX, top: rect.top + window.scrollY };
+}
+function addTreeNode(node, parent) {
+  if (node.level > parent.level) {
+    node.parent = parent;
+    if (!parent.children) parent.children = [];
+    parent.children.push(node);
+    // console.log('[directive] node %d %s, parent %s', node.level, node.title, parent.title);
+    return node;
   }
-  for (let idx in selectors) {
-    let elementList = dom.querySelectorAll(selectors[idx]);
-    elementList.forEach((element) => {
-      if (element.__nav_except) return;
-      element.__nav_level = idx;
-    });
-  }
-  let selector = selectors.join(',');
-  let domList = dom.querySelectorAll(selector);
-  for (let element of domList) {
-    if (!element.__nav_level) {
-      delete element.__nav_except;
-      continue;
-    }
-    let pushList = list;
-    while (element.__nav_level > 0) {
-      pushList = pushList.length ? pushList[pushList.length - 1].children : null;
-      if (!pushList) break;
-      element.__nav_level--;
-    }
-    let data = {
-      title: element.textContent,
-      children: [],
-      el: element,
-    };
-    pushList && pushList.push(data);
-    delete element.__nav_level;
-  }
-  return list;
+  if (parent.parent) return addTreeNode(node, parent.parent);
+  console.error('[directive] fatal error: should not get here');
+  return parent; // error: drop current node
+}
+function buildTree(nodes) {
+  let root = { title: 'ToC', level: 0, children: [] };
+  let parent = root;
+  for (const n of nodes) parent = addTreeNode(n, parent);
+  return root.children;
+}
+// e.nodeName === 'H2' e.getAttribute(props.exceptSelector) e.innerHTML getBoundingClientRect()-valid after mount
+function calcTree() {
+  let elems = [];
+  for (let s of props.selectors) elems = [...elems, ...dom.querySelectorAll(s)]; // gather selectors, lost order
+  let excludes = [];
+  if (props.exceptSelector) excludes = [...dom.querySelectorAll(props.exceptSelector)];
+  elems = elems.filter((e) => !excludes.includes(e)); // remove excludes
+
+  let nodes = [];
+  for (const e of elems) nodes.push({ title: e.innerHTML, level: parseInt(e.nodeName.substring(1)), pos: getElemPos(e), el: e });
+  nodes.sort((a, b) => (a.pos.top !== b.pos.top ? a.pos.top - b.pos.top : a.pos.left - b.pos.left)); // reorder
+  return buildTree(nodes);
+}
+function refresh() {
+  tocTree = calcTree();
+  // console.log('[directive] tocTree %s', JSON.stringify(tocTree));
+  props.callback && props.callback(tocTree);
 }
 
-const el = ref(null);
 export default {
-  created(e, binding, vNode) {
-    console.log('[outline] e %s', JSON.stringify(e));
-    el.value = e;
-    let freeze = false;
-    el.value.__generateNav = () => {
-      if (freeze) return;
-      window.requestAnimationFrame(() => {
-        let selectors = binding.value.selectors || ['h1', 'h2'];
-        let exceptSelector = binding.value.exceptSelector;
-        selectors = selectors.filter((selector) => e.querySelectorAll(selector).length);
-        let list = generateNavTree(e, selectors, exceptSelector);
-        binding.value.callback(list);
-        freeze = false;
-      });
-      freeze = true;
-    };
-
+  mounted(e, binding) {
+    console.log('[directive] e ', e);
+    dom = e;
+    if (binding.value) props = binding.value;
     let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    el.value.__observer = new MutationObserver(() => {
-      el.value.__generateNav && el.value.__generateNav();
-    });
-    const func = () => {
-      el.value.__observer.observe(e, OPTIONS);
-      el.value.__generateNav && el.value.__generateNav();
-    };
-    binding.instance.$nextTick(func);
+    observer = new MutationObserver(() => refresh());
+    observer.observe(dom, obs_config);
+    refresh();
+    // console.log('[directive] calcTree ', calcTree());
   },
   unmounted() {
-    if (el.value.__generateNav) {
-      delete el.value.__generateNav;
-    }
-    if (el.value.__observer) {
-      el.value.__observer.takeRecords();
-      el.value.__observer.disconnect();
-      delete el.value.__observer;
-    }
+    observer.disconnect();
+    dom = null;
+    props = null;
+    observer = null;
+    tocTree = null;
   },
 };

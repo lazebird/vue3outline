@@ -35,12 +35,20 @@
     return id;
   }
   function handleNodeClick(row) {
-    console.log('[table] row %s', JSON.stringify(row));
+    // console.log('[table] row ', row);
     row.el?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
   }
 </script>
 <style scoped>
   span {
     color: blue;
+  }
+  span:hover {
+    text-decoration: underline;
+  }
+  span:active {
+    position: relative;
+    left: 1px;
+    top: 1px;
   }
 </style>
