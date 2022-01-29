@@ -1,11 +1,53 @@
-# Vue 3 + Typescript + Vite
+# vue3outline
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 介绍
 
-## Recommended IDE Setup
+- 本项目缘起于[vue-outline](https://github.com/wintc23/vue-outline)，目的是为页面增加内部目录导航。原项目已经停更 2 年了，基于 vue2。
+- [预览页面](https://lazebird.github.io/vue3outline/)
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## 依赖
 
-## Type Support For `.vue` Imports in TS
+`"vue": "^3.2.25"`
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+## 安装
+
+`pnpm install vue3outline`
+
+## 导入
+
+`import { useOutline } from 'vue3outline';`
+
+## 使用
+
+**可以参考 src/views/HelloWorld.vue**
+
+```HTML
+  <div class="example">
+    <div class="nav">
+      <div class="navcontent">
+        <h1> 目录 </h1>
+        <outline-tree :tree-data="navTree">
+          <template #default="{ scope }">
+            <span class="content_node" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
+          </template>
+        </outline-tree>
+      </div>
+    </div>
+    <div v-outline="tocProps" class="content"> <Contents /> </div>
+  </div>
+```
+
+```Js
+  import { ref } from 'vue';
+  import TestArticle from './test/TestArticle.vue';
+
+  const tocProps = { callback: refreshNavTree, selectors: ['h2', 'h3', 'h4'], exceptSelector: '[un-nav]' };
+
+  const navTree = ref([]);
+  function refreshNavTree(treeData) {
+    navTree.value = treeData;
+  }
+  function jumpToAnchor(el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  }
+```
