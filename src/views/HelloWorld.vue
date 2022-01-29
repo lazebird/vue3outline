@@ -3,10 +3,8 @@
     <div class="navigation">
       <div class="title"> 导航目录 </div>
       <outline-tree :tree-data="navTree" class="tree">
-        <template #default="{ data }">
-          <div class="node-render-content" @click.stop="jumpToAnchor(data.el)">
-            {{ data.title }}
-          </div>
+        <template #default="{ scope }">
+          <span class="node-render-content" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
         </template>
       </outline-tree>
     </div>

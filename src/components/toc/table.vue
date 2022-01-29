@@ -3,7 +3,9 @@
     <el-table :data="data" row-key="id" border :show-header="false" default-expand-all>
       <el-table-column>
         <template #default="scope">
-          <span @click="handleNodeClick(scope.row)">{{ scope.row.title }}</span>
+          <slot :scope="scope">
+            <span @click="handleNodeClick(scope.row)">{{ scope.row.title }}</span>
+          </slot>
         </template>
       </el-table-column>
     </el-table>
