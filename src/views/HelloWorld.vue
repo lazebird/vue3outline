@@ -1,14 +1,14 @@
 <template>
   <div class="example">
     <div class="nav">
-      <el-affix target=".nav">
+      <div class="navcontent">
         <h1> 目录 </h1>
         <outline-tree :tree-data="navTree">
           <template #default="{ scope }">
             <span class="content_node" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
           </template>
         </outline-tree>
-      </el-affix>
+      </div>
     </div>
     <div v-outline="tocProps" class="content"> <TestArticle /> </div>
   </div>
@@ -40,6 +40,12 @@
     padding: 0.5rem;
     border-radius: 2px;
     text-align: left;
+    overflow: auto;
+  }
+  .navcontent {
+    position: fixed;
+    width: 16rem;
+    height: 100%;
     overflow: auto;
   }
   .content_node {
