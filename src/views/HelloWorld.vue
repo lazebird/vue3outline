@@ -10,7 +10,11 @@
         </outline-tree>
       </div>
     </div>
-    <div v-outline="tocProps" class="content"> <TestArticle /> </div>
+    <div v-outline="tocProps" class="content">
+      <strong>本项目为vue3outline(<a href="https://github.com/lazebird/vue3outline">链接</a>)，不完善处请提issue</strong>
+      <strong>下文为vue-outline(<a href="https://github.com/wintc23/vue-outline">链接</a>)作者的测试文章，在此致敬</strong>
+      <TestArticle />
+    </div>
   </div>
 </template>
 
@@ -61,5 +65,8 @@
     position: relative;
     left: 1px;
     top: 1px;
+  }
+  strong {
+    display: block;
   }
 </style>
