@@ -15,7 +15,16 @@
 
 ## 导入
 
-`import { useOutline } from 'vue3outline';`
+```Js
+import { createApp } from 'vue';
+import App from './App.vue';
+import { useOutline } from 'vue3outline';
+
+const app = createApp(App);
+useOutline(app);
+app.mount('#app');
+
+```
 
 ## 使用
 
