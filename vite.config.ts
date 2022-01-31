@@ -15,4 +15,16 @@ export default defineConfig({
     ],
   },
   plugins: [vue()],
+  build: {
+    lib: {
+      entry: pathResolve('src/components/toc/index.js'),
+      name: 'vue3outline',
+      fileName: (format) => `vue3outline.${format}.js`,
+    },
+    sourcemap: true,
+    rollupOptions: {
+      external: ['vue'],
+      output: { globals: { vue: 'Vue' } },
+    },
+  },
 });

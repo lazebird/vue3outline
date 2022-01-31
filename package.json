@@ -14,6 +14,18 @@
     "url": "https://github.com/lazebird/vue3outline/issues"
   },
   "homepage": "https://github.com/lazebird/vue3outline",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue3outline.umd.js",
+  "module": "./dist/vue3outline.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3outline.es.js",
+      "require": "./dist/vue3outline.umd.js"
+    }
+  },
+  "private": false,
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
