@@ -1,0 +1,19 @@
+name: deploy demo to gh-pages
+on:
+  push:
+    branches: [develop]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      name: Checkout
+        uses: actions/checkout@master
+
+      name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.AUTOMATION }}
+          BRANCH: gh-pages
+          FOLDER: dist
+          BUILD_SCRIPT: npm install -g pnpm && pnpm install && pnpm run demo
