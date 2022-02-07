@@ -21,9 +21,9 @@ jobs:
           pnpm run build
 
       - name: 'Publish to the npm registry'
-        uses: lazebird
+        uses: primer/publish@3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.AUTOMATION }} # 跟前面步骤中的 NPM_AUTH_TOKEN 保持一致
+          NPM_AUTH_TOKEN: ${{ secrets.AUTOMATION }}
         with:
           default_branch: 'develop'
