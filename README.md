@@ -1,4 +1,4 @@
-# vue3outline
+# @lazebird/vue3outline
 
 ## 介绍
 
