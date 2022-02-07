@@ -5,19 +5,20 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: 'publish npm'
+    name: "publish npm"
     environment: pnpm
     steps:
-      uses: actions/checkout@master
-      name: Install and Build
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Install and Build
         run: |
           npm install -g pnpm
           pnpm install
           pnpm run build
-      name: 'Publish to the npm registry'
+      - name: "Publish to the npm registry"
         uses: primer/publish@3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.AUTOMATION }}
         with:
-          default_branch: 'develop'
+          default_branch: "develop"

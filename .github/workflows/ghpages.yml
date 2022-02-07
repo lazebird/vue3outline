@@ -7,10 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     steps:
-      name: Checkout
+      - name: Checkout
         uses: actions/checkout@master
-
-      name: Build and Deploy
+      - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@master
         env:
           ACCESS_TOKEN: ${{ secrets.AUTOMATION }}
