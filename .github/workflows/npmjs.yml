@@ -2,6 +2,7 @@ name: publish lib to npmjs
 on:
   push:
     branches: [develop]
+  workflow_dispatch:
 jobs:
   publish:
     runs-on: ubuntu-latest

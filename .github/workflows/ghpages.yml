@@ -2,6 +2,8 @@ name: deploy demo to gh-pages
 on:
   push:
     branches: [develop]
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
