@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Build and Deploy
+      - name: Install and Build 🔧
+        run: |
+          npm install -g pnpm && pnpm install && pnpm run demo
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.3
-        env:
-          ACCESS_TOKEN: ${{ secrets.AUTOMATION }}
-          BRANCH: gh-pages
-          FOLDER: dist
-          BUILD_SCRIPT: npm install -g pnpm && pnpm install && pnpm run demo
+        with:
+          branch: gh-pages
+          folder: dist
