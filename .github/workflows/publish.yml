@@ -1,4 +1,4 @@
-name: Public Npm
+name: publish npmjs
 
 on:
   push:

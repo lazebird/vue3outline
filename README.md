@@ -2,7 +2,7 @@
 
 ## 介绍
 
-- 本项目缘起于[vue-outline](https://github.com/wintc23/vue-outline)，目的是为页面增加内部目录导航。原项目已经停更 2 年了，基于 vue2。
+- 本项目缘起于[vue-outline](https://github.com/wintc23/vue-outline)，目的是为页面增加内部目录导航。原项目已经停更 近 2 年了，基于 vue2。
 - [预览页面](https://lazebird.github.io/vue3outline/)
 
 ## 依赖
@@ -11,14 +11,14 @@
 
 ## 安装
 
-`pnpm install vue3outline`
+`pnpm install @lazebird/vue3outline`
 
 ## 导入
 
 ```Js
 import { createApp } from 'vue';
 import App from './App.vue';
-import { useOutline } from 'vue3outline';
+import { useOutline } from '@lazebird/vue3outline';
 
 const app = createApp(App);
 useOutline(app);
