@@ -2,6 +2,7 @@ name: publish lib to npmjs
 on:
   push:
     branches: [develop]
+    paths: [package.json]
   workflow_dispatch:
 jobs:
   publish:
