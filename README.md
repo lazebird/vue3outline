@@ -3,7 +3,8 @@
 ## 介绍
 
 - 本项目缘起于[vue-outline](https://github.com/wintc23/vue-outline)，目的是为页面增加内部目录导航。原项目已经停更 近 2 年了，基于 vue2。
-- [预览页面](https://lazebird.github.io/vue3outline/)
+- [预览](https://lazebird.github.io/vue3outline/)
+- [npmjs](https://www.npmjs.com/package/@lazebird/vue3outline)
 
 ## 依赖
 

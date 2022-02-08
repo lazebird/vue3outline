@@ -11,8 +11,11 @@
       </div>
     </div>
     <div v-outline="tocProps" class="content">
-      <strong>本项目为vue3outline(<a href="https://github.com/lazebird/vue3outline">链接</a>)，不完善处请提issue</strong>
-      <strong>下文为vue-outline(<a href="https://github.com/wintc23/vue-outline">链接</a>)作者的测试文章，在此致敬</strong>
+      <strong>
+        本项目为vue3outline(<a href="https://github.com/lazebird/vue3outline" target="_blank" rel="noopener noreferrer">链接</a>)，
+        请前往npmjs下载使用(<a href="https://www.npmjs.com/package/@lazebird/vue3outline" target="_blank" rel="noopener noreferrer">链接</a>)，
+        不完善处请提issue(<a href="https://github.com/lazebird/vue3outline/issues" target="_blank" rel="noopener noreferrer">链接</a>)</strong>
+      <strong>下文为vue-outline(<a href="https://github.com/wintc23/vue-outline" target="_blank" rel="noopener noreferrer">链接</a>)作者的测试文章，在此致敬</strong>
       <TestArticle />
     </div>
   </div>
