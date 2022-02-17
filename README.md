@@ -3,8 +3,8 @@
 ## 介绍
 
 - 本项目缘起于[vue-outline](https://github.com/wintc23/vue-outline){:target="\_blank"}，目的是为页面增加内部目录导航。原项目已经停更 近 2 年了，基于 vue2。
-- [预览](https://lazebird.github.io/vue3outline/){:target="\_blank"}
-- [npmjs](https://www.npmjs.com/package/@lazebird/vue3outline){:target="\_blank"}
+- <a href="https://lazebird.github.io/vue3outline/" target="_blank">预览</a>
+- <a href="https://www.npmjs.com/package/@lazebird/vue3outline" target="_blank">npmjs</a>
 
 ## 依赖
 
