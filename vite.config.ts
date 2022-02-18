@@ -32,5 +32,6 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [vue()],
     build: mode === 'demo' ? builddemo : buildlib,
+    server: { host: true },
   };
 });

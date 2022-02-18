@@ -1,7 +1,8 @@
 let dom = null;
 let observer = null;
-let props = { callback: null, selectors: [], exceptSelector: null };
+let props = { callback: null, selectors: [], exceptSelector: null, listenScroll: false };
 let tocTree = [];
+let topNode = null;
 
 const obs_config = {
   subtree: true,
@@ -44,25 +45,36 @@ function calcTree() {
   nodes.sort((a, b) => (a.pos.top !== b.pos.top ? a.pos.top - b.pos.top : a.pos.left - b.pos.left)); // reorder
   return buildTree(nodes);
 }
-function refresh() {
-  tocTree = calcTree();
-  // console.log('[directive] tocTree %s', JSON.stringify(tocTree));
-  props.callback && props.callback(tocTree);
+function calcTopNode(nodes) {
+  for (const n of nodes) {
+    if (n.pos.top > window.scrollY) return n;
+    const topNode = calcTopNode(n.children ?? []);
+    if (topNode) return topNode;
+  }
+  return null;
+}
+function refresh(toc_chg = true) {
+  if (toc_chg) tocTree = calcTree();
+  topNode = calcTopNode(tocTree);
+  // console.log('[directive] ', tocTree, topNode);
+  props.callback && props.callback(tocTree, topNode);
 }
 
 export default {
   mounted(e, binding) {
-    console.log('[directive] e ', e);
+    // console.log('[directive] e ', e);
     dom = e;
     if (binding.value) props = binding.value;
     let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
     observer = new MutationObserver(() => refresh());
     observer.observe(dom, obs_config);
+    if (props.listenScroll) window.addEventListener('scroll', () => refresh(false));
     refresh();
     // console.log('[directive] calcTree ', calcTree());
   },
   unmounted() {
     observer.disconnect();
+    if (props.listenScroll) window.removeEventListener('scroll');
     dom = null;
     props = null;
     observer = null;

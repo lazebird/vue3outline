@@ -1,11 +1,11 @@
 <template>
   <div class="example">
     <div class="nav">
-      <div class="navcontent">
+      <div ref="navcontent" class="navcontent">
         <h1> 目录 </h1>
         <outline-tree :tree-data="navTree">
           <template #default="{ scope }">
-            <span class="content_node" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
+            <span class="content_node" :class="scope.row === topNode ? 'active' : 'inactive'" @click.stop="jumpToAnchor(scope.row.el)"> {{ scope.row.title }} </span>
           </template>
         </outline-tree>
       </div>
@@ -25,11 +25,17 @@
   import { ref } from 'vue';
   import TestArticle from './test/TestArticle.vue';
 
-  const tocProps = { callback: refreshNavTree, selectors: ['h2', 'h3', 'h4'], exceptSelector: '[un-nav]' };
+  const tocProps = { callback: refreshNavTree, selectors: ['h2', 'h3', 'h4'], exceptSelector: '[un-nav]', listenScroll: true };
 
+  const navcontent = ref()
   const navTree = ref([]);
-  function refreshNavTree(treeData) {
+  const topNode = ref(null)
+
+  function refreshNavTree(treeData, topData) {
     navTree.value = treeData;
+    if (topNode.value === topData) return;
+    topNode.value = topData;
+    navcontent.value.querySelector(".active")?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
   }
   function jumpToAnchor(el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -71,5 +77,8 @@
   }
   strong {
     display: block;
+  }
+  .active {
+    text-decoration: underline;
   }
 </style>
